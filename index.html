@@ -42,8 +42,6 @@
   <!-- Контейнер кнопок -->
   <div class="grid" id="grid"></div>
 
-  <!-- Элемент аудио (можешь заменить ссылку на свой mp3) -->
-  <audio id="click-sound" src="81d38fa84d860a1.mp3" preload="auto"></audio>
 
   <script>
     const BUTTON_NAMES = Array.from({length: 20}, (_, i) => `Кнопка ${i + 1}`);
@@ -56,6 +54,7 @@
       btn.className = "btn";
       btn.textContent = name;
       btn.addEventListener("click", () => {
+        const audio = new Audio('${name}.mp3')
         audio.currentTime = 0; // начать с начала
         audio.play().catch(err => console.log('Ошибка звука:', err));
       });
@@ -64,4 +63,5 @@
   </script>
 </body>
 </html>
+
 
