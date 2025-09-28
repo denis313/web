@@ -53,7 +53,7 @@
       btn.className = "btn";
       btn.textContent = name;
       btn.addEventListener("click", () => {
-        const audio = new Audio('${name}.mp3')
+        const audio = new Audio(`${name}.mp3`)
         audio.currentTime = 0; // начать с начала
         audio.play().catch(err => console.log('Ошибка звука:', err));
       });
@@ -62,6 +62,7 @@
   </script>
 </body>
 </html>
+
 
 
 
