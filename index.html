@@ -3,94 +3,64 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Telegram App — Кнопки со звуком</title>
   <style>
-    :root{
-      --gap: 8px;
-      --min-btn-h: 48px;
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background: #f7f8fc;
     }
-    html,body{
-      height:100%;
-      margin:0;
-      font-family:Inter, Roboto, Arial, sans-serif;
-      background:#f6f7fb;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 8px;
+      padding: 12px;
+      overflow-y: auto;
     }
-
-    .page{
-      box-sizing:border-box;
-      height:100vh;
-      padding:12px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.1s ease;
+      user-select: none;
     }
-
-    header{
-      font-weight:600;
-      font-size:18px;
-      color:#111;
-    }
-
-    .grid-wrap{
-      flex:1 1 auto;
-      display:block;
-      width:100%;
-      overflow-y:auto; /* только вертикальная прокрутка */
-      overflow-x:hidden; /* запрет прокрутки в стороны */
-    }
-
-    .grid{
-      display:grid;
-      gap:var(--gap);
-      align-items:stretch;
-      justify-items:stretch;
-      width:100%;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* динамическое количество колонок */
-    }
-
-    .btn{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:12px;
-      border-radius:10px;
-      border:0;
-      cursor:pointer;
-      font-size:14px;
-      font-weight:600;
-      box-shadow:0 1px 0 rgba(0,0,0,0.04);
-      background:linear-gradient(180deg,#fff,#f3f6ff);
-      user-select:none;
-      transition:transform .08s ease, box-shadow .08s;
-    }
-
-    .btn:active{transform:translateY(1px)}
-    .btn:focus{outline:3px solid rgba(34,128,255,0.12)}
-
-    @media (max-width:420px){
-      .page{padding:8px}
-      .btn{font-size:13px;padding:10px}
+    .btn:active {
+      transform: scale(0.97);
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <header>Telegram — список команд</header>
-    <div class="grid-wrap">
-      <div id="grid" class="grid"></div>
-    </div>
-  </div>
+
+  <!-- Контейнер кнопок -->
+  <div class="grid" id="grid"></div>
+
+  <!-- Элемент аудио (можешь заменить ссылку на свой mp3) -->
+  <audio id="click-sound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
 
   <script>
-    const BUTTON_NAMES = Array.from({length: 50}, (_, i) => `Кнопка ${i + 1}`);
-    const grid = document.getElementById('grid');
+    const BUTTON_NAMES = Array.from({length: 20}, (_, i) => `Кнопка ${i + 1}`);
+    const grid = document.getElementById("grid");
+    const audio = document.getElementById("click-sound");
 
+    // создаём кнопки
     BUTTON_NAMES.forEach(name => {
-      const button = document.createElement('button');
-      button.className = 'btn';
-      button.textContent = name;
-      grid.appendChild(button);
+      const btn = document.createElement("div");
+      btn.className = "btn";
+      btn.textContent = name;
+      btn.addEventListener("click", () => {
+        audio.currentTime = 0; // начать с начала
+        audio.play().catch(err => console.log('Ошибка звука:', err));
+      });
+      grid.appendChild(btn);
     });
   </script>
 </body>
 </html>
-
